@@ -1,9 +1,38 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AetherHero } from '@/components/main/hero';
+import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function AuthPage() {
+    const { user, loading } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!loading && user) {
+            router.push('/');
+        }
+    }, [user, loading, router]);
+
+    const handleGoogleLogin = async () => {
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                },
+            });
+            if (error) throw error;
+        } catch (error) {
+            console.error('Error logging in with Google:', error);
+            alert('로그인 중 오류가 발생했습니다.');
+        }
+    };
+
+    if (loading) return null;
+
     return (
         <main>
             <AetherHero
@@ -62,7 +91,7 @@ export default function AuthPage() {
                             </div>
                             
                             <button
-                                onClick={() => console.log('Google login clicked')}
+                                onClick={handleGoogleLogin}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
