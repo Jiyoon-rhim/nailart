@@ -294,7 +294,7 @@ export default function AetherHero({
                     </h1>
 
                     {subtitle ? (
-                        <p
+                        <div
                             style={{
                                 marginTop: '1rem',
                                 fontSize: 'clamp(1rem, 2vw, 1.25rem)',
@@ -306,7 +306,7 @@ export default function AetherHero({
                             }}
                         >
                             {subtitle}
-                        </p>
+                        </div>
                     ) : null}
 
                     {(ctaLabel || secondaryCtaLabel) && (

@@ -4,6 +4,7 @@ export default function Home() {
   return (
     <main>
       <AetherHero
+        ctaHref="/auth"
         title="조회수를 떡상시키는 클릭 유발 썸네일,"
         subtitle={
           <>
